@@ -44,7 +44,6 @@ export const store = new Vuex.Store({
     },
   },
 
-
   actions: {
     increment({ commit }) {
       commit("setLoading", true);
@@ -78,6 +77,7 @@ export const store = new Vuex.Store({
         creatorId: getters.user.id,
       };
       let key;
+      let imageUrl;
       firebase
         .database()
         .ref("meetups")
@@ -94,6 +94,15 @@ export const store = new Vuex.Store({
             .storage()
             .ref("meetups/" + key + "." + ext)
             .put(payload.image);
+        })
+        .then((fileData) => {
+          imageUrl = fileData.ref.getDownloadURL().then((firebaseUrl) => {
+            return firebase
+              .database()
+              .ref("meetups")
+              .child(key)
+              .update({ imageUrl: firebaseUrl });
+          });
         })
 
         .then(() => {
