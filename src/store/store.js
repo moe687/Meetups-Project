@@ -95,15 +95,15 @@ export const store = new Vuex.Store({
             .ref("meetups/" + key + "." + ext)
             .put(payload.image);
         })
-        .then((fileData) => {
-          imageUrl = fileData.ref.getDownloadURL().then((firebaseUrl) => {
-            return firebase
-              .database()
-              .ref("meetups")
-              .child(key)
-              .update({ imageUrl: firebaseUrl });
-          });
-        })
+        // .then((fileData) => {
+        //   imageUrl = fileData.ref.getDownloadURL().then((firebaseUrl) => {
+        //     return firebase
+        //       .database()
+        //       .ref("meetups")
+        //       .child(key)
+        //       .update({ imageUrl: firebaseUrl });
+        //   });
+        // })
 
         .then(() => {
           commit("createMeetup", {
